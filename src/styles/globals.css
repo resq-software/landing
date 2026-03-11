@@ -58,7 +58,6 @@
   --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
-  /* StyleGlide provides a better abstraction for fonts */
   --display-family: var(--font-sans);
   --text-family: var(--font-inter);
   --display-weight: 600;
