@@ -2,81 +2,109 @@ import Link from "next/link";
 
 import { ArrowUpRight } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-
 export function Footer() {
-  const navigation = [
-    { name: "Product", href: "/#feature-modern-teams" },
-    { name: "About Us", href: "/about" },
-    { name: "Pricing", href: "/pricing" },
-    { name: "FAQ", href: "/faq" },
-    { name: "Contact", href: "/contact" },
+  const product = [
+    { name: "Features", href: "/features" },
+    { name: "Use Cases", href: "/use-cases" },
+    { name: "Request Access", href: "/contact" },
   ];
 
-  const social = [
-    { name: "Xwitter", href: "https://x.com/ausrobdev" },
-    { name: "LinkedIn", href: "#" },
+  const company = [
+    { name: "About", href: "/about" },
+    {
+      name: "GitHub",
+      href: "https://github.com/resq-software",
+      external: true,
+    },
   ];
 
-  const legal = [{ name: "Privacy Policy", href: "/privacy" }];
+  const legal = [
+    { name: "Privacy", href: "/privacy" },
+    { name: "Terms", href: "/terms" },
+  ];
 
   return (
     <footer className="flex flex-col items-center gap-14 pt-28 lg:pt-32">
-      <div className="container space-y-3 text-center">
-        <h2 className="text-2xl tracking-tight md:text-4xl lg:text-5xl">
-          Start your free trial today
-        </h2>
-        <p className="text-muted-foreground mx-auto max-w-xl leading-snug text-balance">
-          Mainline is the fit-for-purpose tool for planning and building modern
-          software products.
-        </p>
-        <div>
-          <Button size="lg" className="mt-4" asChild>
-            <a href="https://github.com/shadcnblocks/mainline-nextjs-template">
-              Get template
-            </a>
-          </Button>
+      {/* Brand + columns */}
+      <div className="container grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        {/* Brand */}
+        <div className="space-y-3">
+          <Link href="/" className="inline-block">
+            <span className="text-lg font-bold tracking-tight">
+              <span className="text-sky-400">Res</span>
+              <span className="text-white">Q</span>
+            </span>
+          </Link>
+          <p className="text-muted-foreground text-sm leading-snug">
+            GPS-denied autonomous drone response for disasters.
+          </p>
+        </div>
+
+        {/* Product */}
+        <div className="space-y-3">
+          <h3 className="text-sm font-semibold">Product</h3>
+          <ul className="space-y-2">
+            {product.map((item) => (
+              <li key={item.name}>
+                <Link
+                  href={item.href}
+                  className="text-muted-foreground text-sm transition-opacity hover:opacity-75"
+                >
+                  {item.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Company */}
+        <div className="space-y-3">
+          <h3 className="text-sm font-semibold">Company</h3>
+          <ul className="space-y-2">
+            {company.map((item) => (
+              <li key={item.name}>
+                <Link
+                  href={item.href}
+                  className="text-muted-foreground flex items-center gap-0.5 text-sm transition-opacity hover:opacity-75"
+                  {...(item.external
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
+                >
+                  {item.name}
+                  {item.external && <ArrowUpRight className="size-3" />}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Legal */}
+        <div className="space-y-3">
+          <h3 className="text-sm font-semibold">Legal</h3>
+          <ul className="space-y-2">
+            {legal.map((item) => (
+              <li key={item.name}>
+                <Link
+                  href={item.href}
+                  className="text-muted-foreground text-sm transition-opacity hover:opacity-75"
+                >
+                  {item.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 
-      <nav className="container flex flex-col items-center gap-4">
-        <ul className="flex flex-wrap items-center justify-center gap-6">
-          {navigation.map((item) => (
-            <li key={item.name}>
-              <Link
-                href={item.href}
-                className="font-medium transition-opacity hover:opacity-75"
-              >
-                {item.name}
-              </Link>
-            </li>
-          ))}
-          {social.map((item) => (
-            <li key={item.name}>
-              <Link
-                href={item.href}
-                className="flex items-center gap-0.5 font-medium transition-opacity hover:opacity-75"
-              >
-                {item.name} <ArrowUpRight className="size-4" />
-              </Link>
-            </li>
-          ))}
-        </ul>
-        <ul className="flex flex-wrap items-center justify-center gap-6">
-          {legal.map((item) => (
-            <li key={item.name}>
-              <Link
-                href={item.href}
-                className="text-muted-foreground text-sm transition-opacity hover:opacity-75"
-              >
-                {item.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
+      {/* Copyright */}
+      <div className="container border-t pt-6 pb-6">
+        <p className="text-muted-foreground text-sm">
+          © 2026 ResQ. Apache 2.0 licensed.
+        </p>
+      </div>
 
-      <div className="text-primary mt-10 w-full md:mt-14 lg:mt-20">
+      {/* Decorative wordmark */}
+      <div className="text-primary w-full">
         <svg
           width="1570"
           height="293"
