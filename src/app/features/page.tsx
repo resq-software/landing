@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 import { Background } from "@/components/background";
+import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "Features",
@@ -99,12 +100,9 @@ export default function FeaturesPage() {
 
           {/* CTA */}
           <div className="mt-16 flex justify-center">
-            <Link
-              href="/contact"
-              className="inline-flex items-center rounded-lg bg-sky-500 px-8 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-sky-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
-            >
-              Request Access
-            </Link>
+            <Button size="lg" className="bg-sky-500 text-white hover:bg-sky-600" asChild>
+              <Link href="/contact">Request Access</Link>
+            </Button>
           </div>
         </div>
       </section>
