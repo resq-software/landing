@@ -1,113 +1,57 @@
-import Image from "next/image";
+import Link from "next/link";
 
-import {
-  ArrowRight,
-  Blend,
-  ChartNoAxesColumn,
-  CircleDot,
-  Diamond,
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
-import { DashedLine } from "@/components/dashed-line";
 import { Button } from "@/components/ui/button";
-
-const features = [
-  {
-    title: "Tailored workflows",
-    description: "Track progress across custom issue flows for your team.",
-    icon: CircleDot,
-  },
-  {
-    title: "Cross-team projects",
-    description: "Collaborate across teams and departments.",
-    icon: Blend,
-  },
-  {
-    title: "Milestones",
-    description: "Break projects down into concrete phases.",
-    icon: Diamond,
-  },
-  {
-    title: "Progress insights",
-    description: "Track scope, velocity, and progress over time.",
-    icon: ChartNoAxesColumn,
-  },
-];
 
 export const Hero = () => {
   return (
-    <section className="py-28 lg:py-32 lg:pt-44">
-      <div className="container flex flex-col justify-between gap-8 md:gap-14 lg:flex-row lg:gap-20">
-        {/* Left side - Main content */}
-        <div className="flex-1">
-          <h1 className="text-foreground max-w-160 text-3xl tracking-tight md:text-4xl lg:text-5xl xl:whitespace-nowrap">
-            Mainline Next.js template
-          </h1>
-
-          <p className="text-muted-foreground text-1xl mt-5 md:text-3xl">
-            Mainline is an open-source website template built with shadcn/ui,
-            Tailwind 4 & Next.js
-          </p>
-
-          <div className="mt-8 flex flex-wrap items-center gap-4 lg:flex-nowrap">
-            <Button asChild>
-              <a href="https://github.com/shadcnblocks/mainline-nextjs-template">
-                Get template
-              </a>
-            </Button>
-            <Button
-              variant="outline"
-              className="from-background h-auto gap-2 bg-linear-to-r to-transparent shadow-md"
-              asChild
-            >
-              <a
-                href="https://shadcnblocks.com"
-                className="max-w-56 truncate text-start md:max-w-none"
-              >
-                Built by shadcnblocks.com
-                <ArrowRight className="stroke-3" />
-              </a>
-            </Button>
-          </div>
-        </div>
-
-        {/* Right side - Features */}
-        <div className="relative flex flex-1 flex-col justify-center space-y-5 max-lg:pt-10 lg:pl-10">
-          <DashedLine
-            orientation="vertical"
-            className="absolute top-0 left-0 max-lg:hidden"
-          />
-          <DashedLine
-            orientation="horizontal"
-            className="absolute top-0 lg:hidden"
-          />
-          {features.map((feature) => {
-            const Icon = feature.icon;
-            return (
-              <div key={feature.title} className="flex gap-2.5 lg:gap-5">
-                <Icon className="text-foreground mt-1 size-4 shrink-0 lg:size-5" />
-                <div>
-                  <h2 className="font-text text-foreground font-semibold">
-                    {feature.title}
-                  </h2>
-                  <p className="text-muted-foreground max-w-76 text-sm">
-                    {feature.description}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+    <section className="relative overflow-hidden py-28 lg:py-32 lg:pt-44">
+      {/* Radial glow background effect */}
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+        <div className="h-[400px] w-[800px] rounded-full bg-sky-500/10 blur-[120px]" />
       </div>
 
-      <div className="mt-12 max-lg:ml-6 max-lg:h-[550px] max-lg:overflow-hidden md:mt-20 lg:container lg:mt-24">
-        <div className="relative h-[793px] w-full">
-          <Image
-            src="/hero.webp"
-            alt="hero"
-            fill
-            className="rounded-2xl object-cover object-left-top shadow-lg max-lg:rounded-tr-none"
-          />
+      <div className="container relative flex flex-col items-center text-center">
+        {/* Badge */}
+        <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-sky-500/20 bg-sky-500/10 px-4 py-1.5 text-sm text-sky-400">
+          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-sky-400" />
+          Simulation-verified autonomous operations
+        </div>
+
+        {/* Headline */}
+        <h1 className="max-w-4xl text-4xl tracking-tight md:text-5xl lg:text-6xl xl:text-7xl">
+          <span className="gradient-heading block">Autonomous Drone Response.</span>
+          <span className="text-foreground block">Built for When It Counts.</span>
+        </h1>
+
+        {/* Subheading */}
+        <p className="text-muted-foreground mt-6 max-w-2xl text-lg md:text-xl">
+          GPS-denied operations. Simulation-first safety. Immutable audit trail.
+          ResQ coordinates swarm responses to disasters before the first
+          responder arrives.
+        </p>
+
+        {/* CTAs */}
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+          <Button
+            size="lg"
+            className="bg-sky-500 text-white hover:bg-sky-600"
+            asChild
+          >
+            <Link href="/contact">Request Access</Link>
+          </Button>
+          <Button
+            variant="outline"
+            size="lg"
+            className="gap-2"
+            asChild
+          >
+            <Link href="/features">
+              Explore Features
+              <ArrowRight className="stroke-3" />
+            </Link>
+          </Button>
         </div>
       </div>
     </section>
