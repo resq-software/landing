@@ -1,95 +1,78 @@
-import Image from "next/image";
-import Link from "next/link";
-
-import { ChevronRight } from "lucide-react";
-
-import { DashedLine } from "../dashed-line";
+import { Activity, Brain, Shield, Wifi } from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
 
 const items = [
   {
-    title: "Purpose-built for product development",
-    image: "/features/triage-card.svg",
+    icon: Wifi,
+    title: "GPS-Denied Operations",
+    description:
+      "Mesh communications enable full swarm coordination even when satellite and cellular infrastructure is destroyed. Drones self-organize and maintain formation without external positioning.",
   },
   {
-    title: "Manage projects end-to-end",
-    image: "/features/cycle-card.svg",
+    icon: Shield,
+    title: "Simulation-First Safety",
+    description:
+      "Every behavior is verified in PX4 SITL + Gazebo simulation before deployment. No autonomous action reaches a real drone until it has passed thousands of simulated scenarios.",
   },
   {
-    title: "Build momentum and healthy habits",
-    image: "/features/overview-card.svg",
+    icon: Activity,
+    title: "Immutable Audit Trail",
+    description:
+      "Every mission decision, route change, and sensor observation is committed to the Neo N3 blockchain and pinned to IPFS. Complete chain of custody from dispatch to recovery.",
+  },
+  {
+    icon: Brain,
+    title: "Predictive Intelligence",
+    description:
+      "PDIE ML models forecast disaster spread using historical patterns and live sensor data. Swarms are tasked before human operators recognize the need — minutes matter.",
   },
 ];
 
 export const Features = () => {
   return (
-    <section id="feature-modern-teams" className="pb-28 lg:pb-32">
+    <section id="features" className="py-28 lg:py-32">
       <div className="container">
-        {/* Top dashed line with text */}
-        <div className="relative flex items-center justify-center">
-          <DashedLine className="text-muted-foreground" />
-          <span className="bg-muted text-muted-foreground absolute px-3 font-mono text-sm font-medium tracking-wide max-md:hidden">
-            MEASURE TWICE. CUT ONCE.
-          </span>
-        </div>
-
-        {/* Content */}
-        <div className="mx-auto mt-10 grid max-w-4xl items-center gap-3 md:gap-0 lg:mt-24 lg:grid-cols-2">
+        {/* Header */}
+        <div className="mx-auto max-w-3xl space-y-4 text-center">
+          <p className="text-sky-400 text-sm font-semibold uppercase tracking-widest">
+            Capabilities
+          </p>
           <h2 className="text-2xl tracking-tight md:text-4xl lg:text-5xl">
-            Made for modern product teams
+            Built for the worst conditions
           </h2>
-          <p className="text-muted-foreground leading-snug">
-            Mainline is built on the habits that make the best product teams
-            successful: staying focused, moving quickly, and always aiming for
-            high-quality work.
+          <p className="text-muted-foreground mx-auto max-w-xl leading-snug">
+            Four core capabilities that separate ResQ from tactical drone
+            systems designed for controlled environments.
           </p>
         </div>
 
-        {/* Features Card */}
-        <Card className="mt-8 rounded-3xl md:mt-12 lg:mt-20">
-          <CardContent className="flex p-0 max-md:flex-col">
-            {items.map((item, i) => (
-              <div key={i} className="flex flex-1 max-md:flex-col">
-                <div className="flex-1 p-4 pe-0! md:p-6">
-                  <div className="relative aspect-[1.28/1] overflow-hidden">
-                    <Image
-                      src={item.image}
-                      alt={`${item.title} interface`}
-                      fill
-                      className="object-cover object-left-top ps-4 pt-2"
-                    />
-                    <div className="from-background absolute inset-0 z-10 bg-linear-to-t via-transparent to-transparent" />
+        {/* Feature Cards */}
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:mt-20 lg:grid-cols-4">
+          {items.map((item) => {
+            const Icon = item.icon;
+            return (
+              <Card
+                key={item.title}
+                className="border-border/60 bg-muted/40 group transition-colors hover:border-sky-500/30 hover:bg-sky-500/5"
+              >
+                <CardContent className="flex flex-col gap-4 p-6">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-sky-500/20 bg-sky-500/10">
+                    <Icon className="h-5 w-5 text-sky-400" />
                   </div>
-
-                  <Link
-                    href="#"
-                    className={
-                      "group flex items-center justify-between gap-4 pe-4 pt-4 md:pe-6 md:pt-6"
-                    }
-                  >
-                    <h3 className="font-display max-w-60 text-2xl leading-tight font-bold tracking-tight">
+                  <div className="space-y-2">
+                    <h3 className="text-foreground font-semibold leading-snug">
                       {item.title}
                     </h3>
-                    <div className="rounded-full border p-2">
-                      <ChevronRight className="size-6 transition-transform group-hover:translate-x-1 lg:size-9" />
-                    </div>
-                  </Link>
-                </div>
-                {i < items.length - 1 && (
-                  <div className="relative hidden md:block">
-                    <DashedLine orientation="vertical" />
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      {item.description}
+                    </p>
                   </div>
-                )}
-                {i < items.length - 1 && (
-                  <div className="relative block md:hidden">
-                    <DashedLine orientation="horizontal" />
-                  </div>
-                )}
-              </div>
-            ))}
-          </CardContent>
-        </Card>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
