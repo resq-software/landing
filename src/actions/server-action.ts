@@ -1,16 +1,17 @@
 "use server";
 import { actionClient } from "./safe-action";
 
-import { formSchema } from "@/lib/form-schema";
+import { contactFormSchema } from "@/lib/form-schema";
 
 export const serverAction = actionClient
-  .inputSchema(formSchema)
+  .inputSchema(contactFormSchema)
   .action(async ({ parsedInput }) => {
-    // do something with the data
+    // Simulate network latency — no real backend yet.
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     // eslint-disable-next-line no-console
-    console.log(parsedInput);
+    console.log("[ResQ] Access request received:", parsedInput);
     return {
       success: true,
-      message: "Form submitted successfully",
+      message: "Request received",
     };
   });
