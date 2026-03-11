@@ -62,66 +62,26 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://resq.software"),
   title: {
-    default: "Mainline - Modern Next.js Template",
-    template: "%s | Mainline",
+    default: "ResQ — Autonomous Drone Response for Disasters",
+    template: "%s | ResQ",
   },
   description:
-    "A modern Next.js template built with shadcn/ui, Tailwind & MDX. Open source - MIT License.",
-  keywords: [
-    "Next.js",
-    "nextjs template",
-    "nextjs theme",
-    "nextjs starter",
-    "shadcn template",
-    "shadcn theme",
-    "shadcn starter",
-    "tailwind template",
-    "tailwind theme",
-    "tailwind starter",
-    "mdx template",
-    "mdx theme",
-    "mdx starter",
-  ],
-  authors: [{ name: "shadcnblocks.com" }],
-  creator: "shadcnblocks.com",
-  publisher: "shadcnblocks.com",
-  robots: {
-    index: true,
-    follow: true,
-  },
-  icons: {
-    icon: [
-      { url: "/favicon/favicon.ico", sizes: "48x48" },
-      { url: "/favicon/favicon.svg", type: "image/svg+xml" },
-      { url: "/favicon/favicon-96x96.png", sizes: "96x96", type: "image/png" },
-      { url: "/favicon/favicon.svg", type: "image/svg+xml" },
-      { url: "/favicon/favicon.ico" },
-    ],
-    apple: [{ url: "/favicon/apple-touch-icon.png", sizes: "180x180" }],
-    shortcut: [{ url: "/favicon/favicon.ico" }],
-  },
+    "GPS-denied autonomous drone swarms for disaster response. Simulation-first safety. Immutable blockchain audit trail. ResQ coordinates swarms before the first responder arrives.",
+  keywords: ["autonomous drones", "disaster response", "swarm robotics", "GPS-denied", "search and rescue"],
   openGraph: {
-    title: "Mainline - Modern Next.js Template",
-    description:
-      "A modern Next.js template built with shadcn/ui, Tailwind & MDX. Open source - MIT License.",
-    siteName: "Mainline",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Mainline - Modern Next.js Template",
-      },
-    ],
+    type: "website",
+    locale: "en_US",
+    url: "https://resq.software",
+    siteName: "ResQ",
+    title: "ResQ — Autonomous Drone Response for Disasters",
+    description: "GPS-denied autonomous drone swarms for disaster response.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mainline - Modern Next.js Template",
-    description:
-      "A modern Next.js template built with shadcn/ui, Tailwind & MDX. Open source - MIT License.",
-    images: ["/og-image.jpg"],
-    creator: "@ausrobdev",
+    title: "ResQ — Autonomous Drone Response for Disasters",
+    description: "GPS-denied autonomous drone swarms for disaster response.",
   },
 };
 
@@ -142,8 +102,7 @@ export default function RootLayout({
       <body className={`${dmSans.variable} ${inter.variable} antialiased`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
-          enableSystem
+          defaultTheme="dark"
           disableTransitionOnChange
         >
           <StyleGlideProvider />

@@ -1,6 +1,7 @@
 {
-  "name": "mainline-nextjs-template",
+  "name": "resq-landing",
   "version": "1.2.0",
+  "description": "ResQ marketing site — resq.software",
   "author": "Shadcnblocks.com",
   "private": true,
   "scripts": {
