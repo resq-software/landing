@@ -12,33 +12,32 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: Deploy to Cloudflare Pages
+name: Label Sync
 
 on:
   push:
     branches: [main]
+    paths:
+      - ".github/labels.yml"
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  contents: read
 
 jobs:
-  deploy:
+  sync:
+    name: Sync Labels
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      deployments: write
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout
+        uses: actions/checkout@v6
 
-      - uses: oven-sh/setup-bun@v2
-
-      - run: bun install --frozen-lockfile
-
-      - name: Build for Cloudflare Pages
-        run: |
-          bun run build
-          bunx @cloudflare/next-on-pages@1 --skip-build
-
-      - name: Deploy
-        uses: cloudflare/wrangler-action@v3
+      - name: Sync labels
+        uses: EndBug/label-sync@v2
         with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy .vercel/output/static --project-name=resq-landing --branch=main
+          config-file: .github/labels.yml
+          delete-other-labels: false
+          dry-run: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
