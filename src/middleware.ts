@@ -97,13 +97,13 @@ const applySecurityHeaders = (response: NextResponse, nonce: string): void => {
 };
 
 /**
- * Processes incoming requests that match the proxy config and injects request
- * metadata plus security headers.
+ * Processes incoming requests that match the middleware config and injects
+ * request metadata plus security headers.
  *
  * @param request - The incoming Next.js request object.
- * @returns The proxied or passthrough response.
+ * @returns The middleware response for the incoming request.
  */
-export function proxy(request: NextRequest): NextResponse {
+export function middleware(request: NextRequest): NextResponse {
   const { pathname } = request.nextUrl;
 
   if (shouldBypassProxy(pathname)) {
@@ -130,11 +130,6 @@ export function proxy(request: NextRequest): NextResponse {
 
   return response;
 }
-
-/**
- * Ensures the proxy runs in the edge runtime required by Cloudflare Pages.
- */
-export const runtime = "edge";
 
 /**
  * Declares which request paths should be handled by the proxy.
