@@ -1,21 +1,10 @@
-# ResQ Landing Documentation
+# ResQ Landing
+
+The public-facing marketing and documentation platform for the ResQ autonomous drone disaster-response ecosystem.
 
 ![CI Status](https://img.shields.io/github/actions/workflow/status/resq-software/landing/ci.yml?branch=main&label=ci&style=flat-square)
 ![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg?style=flat-square)
 ![Next.js 15](https://img.shields.io/badge/Next.js-15-black?style=flat-square)
-
-## Table of Contents
-1. [Overview](#overview)
-2. [Features](#features)
-3. [Architecture](#architecture)
-4. [Quick Start](#quick-start)
-5. [Usage](#usage)
-6. [Configuration](#configuration)
-7. [API Overview](#api-overview)
-8. [Development](#development)
-9. [Contributing](#contributing)
-10. [Roadmap](#roadmap)
-11. [License](#license)
 
 ---
 
@@ -53,101 +42,153 @@ graph TD
 
 ---
 
-## Quick Start
+## Installation
 
 ### Prerequisites
 - [Bun](https://bun.sh/) (runtime and package manager)
 - [Nix](https://nixos.org/) (recommended for reproducible environments)
 
-### Installation
+### Project Setup
+
 ```bash
 git clone https://github.com/resq-software/landing.git
 cd landing
 ./scripts/setup.sh
-bun install
 ```
 
-### Running Locally
-```bash
-bun dev
-```
-Navigate to `http://localhost:3000` to view the application.
+This script handles installing necessary tools like Nix and Bun, and prepares the project environment.
+
+---
+
+## Quick Start
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/resq-software/landing.git
+    cd landing
+    ```
+
+2.  **Set up the development environment:**
+    The `scripts/setup.sh` script will guide you through installing prerequisites like Nix and Bun if they are not already present. It also configures Git hooks for a better developer experience.
+    ```bash
+    ./scripts/setup.sh
+    ```
+
+3.  **Install dependencies:**
+    Use Bun to install project dependencies.
+    ```bash
+    bun install
+    ```
+
+4.  **Start the development server:**
+    Run the application locally.
+    ```bash
+    bun dev
+    ```
+    The application will be available at `http://localhost:3000`.
 
 ---
 
 ## Usage
 
-### Adding a New Page
-New marketing pages should be added under the `src/app/(marketing)/` directory to inherit the marketing layout and styles.
+### Navigation
 
-### Syncing Agent Documentation
-If you modify `AGENTS.md`, ensure you run the sync script to update local agent configurations:
-```bash
-./agent-sync.sh
-```
+The site uses a persistent navigation bar at the top, which adapts for mobile with a hamburger menu. Key sections include:
+
+-   **Home:** The main landing page.
+-   **Features:** Details the platform's capabilities.
+-   **Use Cases:** Illustrates deployment scenarios.
+-   **About:** Provides company and product philosophy information.
+-   **Contact:** For requesting early access or support.
+
+### Form Submissions
+
+Forms, such as the contact form, utilize Next.js Server Actions for secure and type-safe data handling. Input validation is performed using Zod.
 
 ---
 
 ## Configuration
 
-Environment variables are managed via `@t3-oss/env-nextjs`. Create a `.env.local` file from the `.env.example`:
+Environment variables are managed via `@t3-oss/env-nextjs`. Create a `.env.local` file in the project root based on the `.env.example` file.
 
-| Variable | Requirement | Description |
-| :--- | :--- | :--- |
-| `NEXT_PUBLIC_SENTRY_DSN` | Optional | Client-side error monitoring DSN |
-| `SENTRY_AUTH_TOKEN` | Required | For build-time source map uploads |
-| `VERCEL_TOKEN` | Build-time | Required for automated deployments |
+| Variable                | Requirement | Description                                                                 |
+| :---------------------- | :---------- | :-------------------------------------------------------------------------- |
+| `NODE_ENV`              | Required    | Application environment (`development`, `production`).                     |
+| `NEXT_PUBLIC_APP_URL`   | Optional    | The canonical URL of the deployed application.                              |
+| `NEXT_PUBLIC_SENTRY_DSN`| Optional    | Sentry DSN for client-side error monitoring.                                |
+| `SENTRY_AUTH_TOKEN`     | Optional    | Sentry auth token for build-time source map uploads.                        |
+| `SENTRY_ORG`            | Optional    | Sentry organization slug.                                                   |
+| `SENTRY_PROJECT`        | Optional    | Sentry project slug.                                                        |
+| `VERCEL_GIT_COMMIT_SHA` | Optional    | Git commit SHA, used for Sentry release tracking.                           |
 
 ---
 
 ## API Overview
 
-The project leverages **Next.js Server Actions** for handling form submissions and server-side state mutations.
+The project primarily uses Next.js Server Actions for backend interactions, such as form submissions.
 
-### `src/actions/contact/submit-contact.ts`
-- **Purpose:** Handles contact form submissions.
-- **Validation:** Uses Zod schemas defined in `src/lib/validation/form-schema.ts`.
-- **Return Type:** `SafeAction` wrapper ensuring unified response formatting.
+### Server Actions
+
+-   **`src/actions/contact/submit-contact.ts`**: Handles contact form submissions. It validates data using Zod and simulates a successful request.
 
 ---
 
 ## Development
 
-### Linting & Formatting
-We use [Biome](https://biomejs.dev/) to enforce high-performance code standards.
-```bash
-bun run lint   # Run linter
-bun run check  # Format and lint
-```
+### Linting and Formatting
+
+This project uses [Biome](https://biomejs.dev/) for code linting and formatting to ensure consistent code quality.
+
+-   **Check linting:**
+    ```bash
+    bun run lint
+    ```
+
+-   **Format and lint code:**
+    ```bash
+    bun run check
+    ```
+    This command automatically formats files and applies lint fixes.
 
 ### Git Hooks
-Pre-commit and pre-push hooks are located in `.git-hooks/`. They ensure that code quality standards are maintained before any code reaches the remote repository.
 
-### CI/CD
-The repository uses GitHub Actions for CI:
-- **CI Pipeline:** Validates builds, checks linting, and runs type-checking.
-- **Deployment:** Automatic deployments to Vercel upon merging to the `main` branch.
+Pre-commit and pre-push hooks are located in `.git-hooks/`. These hooks enforce code quality standards, prevent large files or secrets from being committed, and ensure commit message compliance. The `scripts/setup.sh` script automatically configures Git to use these hooks.
+
+### Testing
+
+Unit and integration tests are managed by Vitest. Run tests with coverage:
+
+```bash
+bun test --coverage
+```
+
+### Deployment
+
+The application is deployed automatically to Cloudflare Pages via a CI/CD pipeline configured in `.github/workflows/deploy.yml`.
+
+-   **CI Pipeline:** Runs `bun build` and type checks on every push to `main` or pull request.
+-   **Deployment:** Merges to `main` trigger a build and deployment to Cloudflare Pages using `wrangler-action`.
 
 ---
 
 ## Contributing
 
-1. **Fork the repo.**
-2. **Feature Branch:** Create a branch based on our conventional commit standards (`feat/`, `fix/`, `content/`).
-3. **Commit Messages:** Follow [Conventional Commits](https://www.conventionalcommits.org/).
-4. **Testing:** Run `bun check` before submitting a Pull Request.
+1.  **Fork the repository** and create a new branch for your changes. Follow conventional commit naming: `feat/`, `fix/`, `docs/`, etc.
+2.  **Code Quality:** Ensure all code is formatted and linted using `bun run check`.
+3.  **Commit Messages:** Adhere to the [Conventional Commits](https://www.conventionalcommits.org/) specification. The `prepare-commit-msg` hook will prefix messages with ticket references if found in the branch name.
+4.  **Pull Requests:** Submit pull requests against the `main` branch. Ensure all CI checks pass.
 
 ---
 
 ## Roadmap
 
-- [ ] Implement dark/light mode toggle with system preference persistence.
-- [ ] Add comprehensive E2E tests using Playwright.
-- [ ] Extend instrumentation to include custom performance metrics.
-- [ ] Add blog functionality using MDX.
+-   [ ] Implement dark/light mode toggle with system preference persistence.
+-   [ ] Add comprehensive E2E tests using Playwright.
+-   [ ] Extend instrumentation to include custom performance metrics.
+-   [ ] Add blog functionality using MDX.
 
 ---
 
 ## License
 
-Copyright 2026 ResQ. Licensed under the [Apache License, Version 2.0](./LICENSE).
+This project is licensed under the **Apache License 2.0**. See the [LICENSE](LICENSE) file for details.
