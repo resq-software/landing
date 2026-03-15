@@ -160,6 +160,20 @@ const Carousel = React.forwardRef<
       };
     }, [api, onSelect]);
 
+    const viewport = (
+      // biome-ignore lint/a11y/useSemanticElements: the WAI-ARIA carousel pattern uses a generic container with role="group" and aria-roledescription="carousel"
+      <section
+        ref={ref}
+        onKeyDownCapture={handleKeyDown}
+        className={cn("relative", className)}
+        role="group"
+        aria-roledescription="carousel"
+        {...props}
+      >
+        {children}
+      </section>
+    );
+
     return (
       <CarouselContext.Provider
         value={{
@@ -174,15 +188,7 @@ const Carousel = React.forwardRef<
           canScrollNext,
         }}
       >
-        <section
-          ref={ref}
-          onKeyDownCapture={handleKeyDown}
-          className={cn("relative", className)}
-          aria-roledescription="carousel"
-          {...props}
-        >
-          {children}
-        </section>
+        {viewport}
       </CarouselContext.Provider>
     );
   },
@@ -231,7 +237,8 @@ const CarouselItem = React.forwardRef<
 >(({ className, ...props }, ref) => {
   const { orientation } = useCarousel();
 
-  return (
+  const slide = (
+    // biome-ignore lint/a11y/useSemanticElements: <fieldset> is semantically incorrect for carousel slides; role="group" is the correct ARIA pattern
     <div
       ref={ref}
       role="group"
@@ -244,6 +251,8 @@ const CarouselItem = React.forwardRef<
       {...props}
     />
   );
+
+  return slide;
 });
 CarouselItem.displayName = "CarouselItem";
 

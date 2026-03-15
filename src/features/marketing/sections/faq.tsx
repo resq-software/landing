@@ -84,7 +84,7 @@ export const FAQ = ({ headerTag = "h2", className, className2 }: FAQProps) => {
           <div className="grid gap-2 text-start">
             <Accordion type="single" collapsible className="w-full">
               {questions.map((item, i) => (
-                <AccordionItem key={i} value={`faq-${i}`}>
+                <AccordionItem key={item.question} value={`faq-${i}`}>
                   <AccordionTrigger className="text-left">
                     {item.question}
                   </AccordionTrigger>

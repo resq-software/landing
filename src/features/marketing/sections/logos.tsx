@@ -156,8 +156,8 @@ const LogoRow = ({ companies, gridClassName, direction }: LogoRowProps) => {
             gridClassName,
           )}
         >
-          {companies.map((company, index) => (
-            <Link href={company.href} target="_blank" key={index}>
+          {companies.map((company) => (
+            <Link href={company.href} target="_blank" key={company.name}>
               <Image
                 src={company.logo}
                 alt={`${company.name} logo`}
@@ -173,11 +173,11 @@ const LogoRow = ({ companies, gridClassName, direction }: LogoRowProps) => {
       {/* Mobile marquee version */}
       <div className="md:hidden">
         <Marquee direction={direction} pauseOnHover>
-          {companies.map((company, index) => (
+          {companies.map((company) => (
             <Link
               href={company.href}
               target="_blank"
-              key={index}
+              key={company.name}
               className="mx-8 inline-block transition-opacity hover:opacity-70"
             >
               <Image

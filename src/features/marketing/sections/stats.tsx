@@ -48,9 +48,9 @@ export const Stats = ({ className }: StatsProps) => {
     >
       <div className="container">
         <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
-          {stats.map((stat, i) => (
+          {stats.map((stat) => (
             <div
-              key={i}
+              key={stat.label}
               className="flex flex-col items-center gap-1.5 text-center"
             >
               <div className="gradient-heading text-2xl font-bold tracking-tight md:text-3xl lg:text-4xl">
