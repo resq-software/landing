@@ -1,7 +1,16 @@
-import * as React from "react";
+/**
+ * Provides a styled text input primitive for forms.
+ */
+import type * as React from "react";
 
 import { cn } from "@/lib/utils";
 
+/**
+ * Renders a styled HTML input element.
+ *
+ * @param props - Native input props and optional class overrides.
+ * @returns A themed input control.
+ */
 function Input({ className, type, ...props }: React.ComponentProps<"input">) {
   return (
     <input

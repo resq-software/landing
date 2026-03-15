@@ -1,12 +1,20 @@
 "use client";
 
-import * as React from "react";
-
+/**
+ * Defines the styled checkbox primitive used across application forms.
+ */
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 import { CheckIcon } from "lucide-react";
+import type * as React from "react";
 
 import { cn } from "@/lib/utils";
 
+/**
+ * Renders a Radix checkbox with shared application styling and indicator icon.
+ *
+ * @param props - Checkbox root props.
+ * @returns The styled checkbox primitive.
+ */
 function Checkbox({
   className,
   ...props

@@ -1,7 +1,16 @@
-import * as React from "react";
+/**
+ * Provides a styled textarea primitive for multi-line text input.
+ */
+import type * as React from "react";
 
 import { cn } from "@/lib/utils";
 
+/**
+ * Renders a styled HTML textarea element.
+ *
+ * @param props - Native textarea props and optional class overrides.
+ * @returns A themed textarea control.
+ */
 function Textarea({ className, ...props }: React.ComponentProps<"textarea">) {
   return (
     <textarea

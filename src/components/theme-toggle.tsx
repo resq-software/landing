@@ -1,10 +1,18 @@
 "use client";
 
+/**
+ * Renders a button that toggles between the light and dark themes.
+ */
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 
 import { Button } from "@/components/ui/button";
 
+/**
+ * Toggles the current theme using `next-themes`.
+ *
+ * @returns A button that flips the active theme mode.
+ */
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
 

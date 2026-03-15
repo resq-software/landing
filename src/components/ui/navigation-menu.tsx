@@ -1,11 +1,20 @@
-import * as React from "react";
-
+/**
+ * Wraps Radix navigation menu primitives with the shared site styling.
+ */
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
 import { cva } from "class-variance-authority";
 import { ChevronDown } from "lucide-react";
+import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
+/**
+ * Renders the root navigation menu and mounts the shared viewport.
+ *
+ * @param props - Root navigation menu props.
+ * @param ref - Ref forwarded to the Radix root element.
+ * @returns The styled navigation menu root.
+ */
 const NavigationMenu = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Root>
@@ -24,6 +33,13 @@ const NavigationMenu = React.forwardRef<
 ));
 NavigationMenu.displayName = NavigationMenuPrimitive.Root.displayName;
 
+/**
+ * Renders the list container for top-level navigation items.
+ *
+ * @param props - List props for the navigation menu.
+ * @param ref - Ref forwarded to the Radix list element.
+ * @returns The styled navigation item list.
+ */
 const NavigationMenuList = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.List>,
   React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.List>
@@ -39,12 +55,25 @@ const NavigationMenuList = React.forwardRef<
 ));
 NavigationMenuList.displayName = NavigationMenuPrimitive.List.displayName;
 
+/**
+ * Represents a single top-level navigation menu item.
+ */
 const NavigationMenuItem = NavigationMenuPrimitive.Item;
 
+/**
+ * Generates the trigger classes shared by navigation menu buttons.
+ */
 const navigationMenuTriggerStyle = cva(
   "group inline-flex h-9 w-max items-center justify-center rounded-md bg-background p-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-hidden disabled:pointer-events-none disabled:opacity-50 data-active:bg-accent/50 data-[state=open]:bg-accent/50",
 );
 
+/**
+ * Renders a styled trigger that opens navigation menu content.
+ *
+ * @param props - Trigger props.
+ * @param ref - Ref forwarded to the Radix trigger element.
+ * @returns A navigation trigger with a directional icon.
+ */
 const NavigationMenuTrigger = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Trigger>
@@ -63,6 +92,13 @@ const NavigationMenuTrigger = React.forwardRef<
 ));
 NavigationMenuTrigger.displayName = NavigationMenuPrimitive.Trigger.displayName;
 
+/**
+ * Renders the content panel associated with a navigation trigger.
+ *
+ * @param props - Content props for the navigation menu.
+ * @param ref - Ref forwarded to the Radix content element.
+ * @returns The styled content panel.
+ */
 const NavigationMenuContent = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Content>
@@ -78,8 +114,18 @@ const NavigationMenuContent = React.forwardRef<
 ));
 NavigationMenuContent.displayName = NavigationMenuPrimitive.Content.displayName;
 
+/**
+ * Represents a single navigation menu link.
+ */
 const NavigationMenuLink = NavigationMenuPrimitive.Link;
 
+/**
+ * Renders the positioned viewport used for floating navigation content.
+ *
+ * @param props - Viewport props for the navigation menu.
+ * @param ref - Ref forwarded to the Radix viewport element.
+ * @returns The shared navigation menu viewport wrapper.
+ */
 const NavigationMenuViewport = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Viewport>,
   React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Viewport>
@@ -98,6 +144,13 @@ const NavigationMenuViewport = React.forwardRef<
 NavigationMenuViewport.displayName =
   NavigationMenuPrimitive.Viewport.displayName;
 
+/**
+ * Renders the indicator that points at the active navigation trigger.
+ *
+ * @param props - Indicator props for the navigation menu.
+ * @param ref - Ref forwarded to the Radix indicator element.
+ * @returns The styled navigation indicator.
+ */
 const NavigationMenuIndicator = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Indicator>,
   React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Indicator>

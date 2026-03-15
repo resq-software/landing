@@ -1,11 +1,19 @@
 "use client";
 
-import * as React from "react";
-
+/**
+ * Provides a styled label primitive built on Radix Label.
+ */
 import * as LabelPrimitive from "@radix-ui/react-label";
+import type * as React from "react";
 
 import { cn } from "@/lib/utils";
 
+/**
+ * Renders a themed form label.
+ *
+ * @param props - Radix label props and optional class overrides.
+ * @returns A styled label element.
+ */
 function Label({
   className,
   ...props

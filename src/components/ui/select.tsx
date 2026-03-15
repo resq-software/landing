@@ -1,30 +1,56 @@
 "use client";
 
-import * as React from "react";
-
+/**
+ * Wraps Radix select primitives with shared styling and slot metadata.
+ */
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react";
+import type * as React from "react";
 
 import { cn } from "@/lib/utils";
 
+/**
+ * Renders the root select primitive.
+ *
+ * @param props - Select root props.
+ * @returns The select root element.
+ */
 function Select({
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Root>) {
   return <SelectPrimitive.Root data-slot="select" {...props} />;
 }
 
+/**
+ * Groups related select items under a shared label.
+ *
+ * @param props - Select group props.
+ * @returns The select group element.
+ */
 function SelectGroup({
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Group>) {
   return <SelectPrimitive.Group data-slot="select-group" {...props} />;
 }
 
+/**
+ * Renders the current select value placeholder or selected content.
+ *
+ * @param props - Select value props.
+ * @returns The select value element.
+ */
 function SelectValue({
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Value>) {
   return <SelectPrimitive.Value data-slot="select-value" {...props} />;
 }
 
+/**
+ * Renders the styled trigger that opens the select content.
+ *
+ * @param props - Trigger props, including the optional size variant.
+ * @returns The select trigger element.
+ */
 function SelectTrigger({
   className,
   size = "default",
@@ -51,6 +77,12 @@ function SelectTrigger({
   );
 }
 
+/**
+ * Renders the floating select content portal and viewport.
+ *
+ * @param props - Content props including placement options.
+ * @returns The select dropdown content.
+ */
 function SelectContent({
   className,
   children,
@@ -88,6 +120,12 @@ function SelectContent({
   );
 }
 
+/**
+ * Renders a section label inside select content.
+ *
+ * @param props - Label props for the select section.
+ * @returns The select label element.
+ */
 function SelectLabel({
   className,
   ...props
@@ -101,6 +139,12 @@ function SelectLabel({
   );
 }
 
+/**
+ * Renders an individual selectable option.
+ *
+ * @param props - Item props for the select option.
+ * @returns The styled select item element.
+ */
 function SelectItem({
   className,
   children,
@@ -125,6 +169,12 @@ function SelectItem({
   );
 }
 
+/**
+ * Renders a divider between groups of select items.
+ *
+ * @param props - Separator props.
+ * @returns The select separator element.
+ */
 function SelectSeparator({
   className,
   ...props
@@ -138,6 +188,12 @@ function SelectSeparator({
   );
 }
 
+/**
+ * Renders the scroll-up affordance for long select menus.
+ *
+ * @param props - Scroll button props.
+ * @returns The scroll-up button element.
+ */
 function SelectScrollUpButton({
   className,
   ...props
@@ -156,6 +212,12 @@ function SelectScrollUpButton({
   );
 }
 
+/**
+ * Renders the scroll-down affordance for long select menus.
+ *
+ * @param props - Scroll button props.
+ * @returns The scroll-down button element.
+ */
 function SelectScrollDownButton({
   className,
   ...props

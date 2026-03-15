@@ -1,10 +1,16 @@
-import Link from "next/link";
-
+/**
+ * Renders the application-wide 404 experience for unmatched routes.
+ */
 import { ArrowLeft } from "lucide-react";
-
-import { Background } from "@/components/background";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { Background } from "@/features/marketing/components/background";
 
+/**
+ * Displays a branded not-found page with routes back into the marketing site.
+ *
+ * @returns The fallback UI for unknown routes.
+ */
 export default function NotFound() {
   return (
     <Background>
