@@ -132,6 +132,11 @@ export function proxy(request: NextRequest): NextResponse {
 }
 
 /**
+ * Ensures the proxy runs in the edge runtime required by Cloudflare Pages.
+ */
+export const runtime = "edge";
+
+/**
  * Declares which request paths should be handled by the proxy.
  */
 export const config = {
