@@ -1,148 +1,153 @@
-<h1 align="center">resq.software</h1>
+# ResQ Landing Documentation
 
-<p align="center">
-  Marketing site for the ResQ autonomous drone disaster-response platform.
-</p>
-
-<p align="center">
-  <a href="https://github.com/resq-software/landing/actions/workflows/ci.yml">
-    <img src="https://img.shields.io/github/actions/workflow/status/resq-software/landing/ci.yml?branch=main&label=ci&style=flat-square" alt="CI" />
-  </a>
-  <a href="https://resq.software">
-    <img src="https://img.shields.io/website?url=https%3A%2F%2Fresq.software&style=flat-square&label=resq.software" alt="resq.software" />
-  </a>
-  <a href="./LICENSE">
-    <img src="https://img.shields.io/badge/license-Apache--2.0-blue.svg?style=flat-square" alt="License: Apache-2.0" />
-  </a>
-</p>
-
----
+![CI Status](https://img.shields.io/github/actions/workflow/status/resq-software/landing/ci.yml?branch=main&label=ci&style=flat-square)
+![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg?style=flat-square)
+![Next.js 15](https://img.shields.io/badge/Next.js-15-black?style=flat-square)
 
 ## Table of Contents
-
-- [Overview](#overview)
-- [Stack](#stack)
-- [Quick Start](#quick-start)
-- [Configuration](#configuration)
-- [Deployment](#deployment)
-- [Contributing](#contributing)
-- [License](#license)
+1. [Overview](#overview)
+2. [Features](#features)
+3. [Architecture](#architecture)
+4. [Quick Start](#quick-start)
+5. [Usage](#usage)
+6. [Configuration](#configuration)
+7. [API Overview](#api-overview)
+8. [Development](#development)
+9. [Contributing](#contributing)
+10. [Roadmap](#roadmap)
+11. [License](#license)
 
 ---
 
 ## Overview
 
-The ResQ marketing and product site, deployed at [resq.software](https://resq.software). Built with Next.js 15 App Router, Tailwind CSS v4, and Bun. Includes MDX-powered docs pages, Sentry error monitoring, and performance observability via OpenTelemetry.
-
-**Related projects:**
-
-| Repo | Description |
-|------|-------------|
-| [resq-software/resQ](https://github.com/resq-software/resQ) | Core platform monorepo |
-| [resq-software/ui](https://github.com/resq-software/ui) | Shared component library (`@resq-sw/ui`) |
+The ResQ Landing repository serves as the public-facing marketing and documentation platform for the ResQ autonomous drone disaster-response ecosystem. Built for speed, accessibility, and high performance, it utilizes the modern Next.js 15 App Router and is optimized for edge-first delivery.
 
 ---
 
-## Stack
+## Features
 
-- [Next.js 15](https://nextjs.org/) — App Router, MDX pages, `next/image`
-- [Tailwind CSS v4](https://tailwindcss.com/) — utility-first styling
-- [shadcn/ui](https://ui.shadcn.com/) + [`@resq-sw/ui`](https://github.com/resq-software/ui) — component system
-- [Bun](https://bun.sh/) — package manager and runtime
-- [Sentry](https://sentry.io/) — error tracking and session replay
-- [Biome](https://biomejs.dev/) — linting and formatting
+- **Next.js 15 App Router:** Leveraging Server Components for zero-bundle-size static pages.
+- **Tailwind CSS v4:** High-performance, low-configuration utility-first styling.
+- **Edge-Ready:** Instrumented for observability and edge-deployment (Cloudflare/Vercel).
+- **Type-Safe:** Strict TypeScript configuration with Biome linting and formatting.
+- **Robust UI:** Built on top of a shared component library with accessible, adaptive design.
+- **Developer Experience:** Integrated Git hooks, automated agent syncing, and a standardized CLI command structure.
+
+---
+
+## Architecture
+
+The system follows a feature-based architecture where business logic and marketing sections are decoupled from base UI components.
+
+```mermaid
+graph TD
+    A[Client Request] --> B[Middleware / Edge]
+    B --> C[Next.js App Router]
+    C --> D[Server Actions]
+    C --> E[UI Components]
+    E --> F[Tailwind CSS / Assets]
+    D --> G[Contact / Validation Logic]
+    C --> H[Instrumentation / OTel]
+```
 
 ---
 
 ## Quick Start
 
-```sh
+### Prerequisites
+- [Bun](https://bun.sh/) (runtime and package manager)
+- [Nix](https://nixos.org/) (recommended for reproducible environments)
+
+### Installation
+```bash
 git clone https://github.com/resq-software/landing.git
 cd landing
-./scripts/setup.sh   # installs Nix + Docker; runs bun install
-bun dev              # http://localhost:3000
+./scripts/setup.sh
+bun install
 ```
 
-Or without Nix:
-
-```sh
-bun install
+### Running Locally
+```bash
 bun dev
+```
+Navigate to `http://localhost:3000` to view the application.
+
+---
+
+## Usage
+
+### Adding a New Page
+New marketing pages should be added under the `src/app/(marketing)/` directory to inherit the marketing layout and styles.
+
+### Syncing Agent Documentation
+If you modify `AGENTS.md`, ensure you run the sync script to update local agent configurations:
+```bash
+./agent-sync.sh
 ```
 
 ---
 
 ## Configuration
 
-Copy `.env.example` to `.env.local` and fill in the values:
+Environment variables are managed via `@t3-oss/env-nextjs`. Create a `.env.local` file from the `.env.example`:
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `NEXT_PUBLIC_SENTRY_DSN` | No | Sentry DSN for client-side error reporting |
-| `SENTRY_AUTH_TOKEN` | Build-time | Uploads source maps to Sentry on `bun build` |
-| `SENTRY_ORG` | Build-time | Sentry organisation slug |
-| `SENTRY_PROJECT` | Build-time | Sentry project slug |
-
-All env vars are validated at build time via [`@t3-oss/env-nextjs`](https://env.t3.gg/).
+| Variable | Requirement | Description |
+| :--- | :--- | :--- |
+| `NEXT_PUBLIC_SENTRY_DSN` | Optional | Client-side error monitoring DSN |
+| `SENTRY_AUTH_TOKEN` | Required | For build-time source map uploads |
+| `VERCEL_TOKEN` | Build-time | Required for automated deployments |
 
 ---
 
-## Deployment
+## API Overview
 
-Production deploys to Vercel automatically on merge to `main`.
+The project leverages **Next.js Server Actions** for handling form submissions and server-side state mutations.
 
-Required repository secrets:
+### `src/actions/contact/submit-contact.ts`
+- **Purpose:** Handles contact form submissions.
+- **Validation:** Uses Zod schemas defined in `src/lib/validation/form-schema.ts`.
+- **Return Type:** `SafeAction` wrapper ensuring unified response formatting.
 
-| Secret | Description |
-|--------|-------------|
-| `VERCEL_TOKEN` | Vercel API token |
-| `VERCEL_ORG_ID` | Vercel organisation ID |
-| `VERCEL_PROJECT_ID` | Vercel project ID |
-| `SENTRY_AUTH_TOKEN` | Source map upload token |
+---
 
-### Docker (local preview / self-hosting)
+## Development
 
-```sh
-docker build \
-  --build-arg NEXT_PUBLIC_SENTRY_DSN=your_dsn \
-  -t resq-landing .
-
-docker run -p 3000:3000 resq-landing
+### Linting & Formatting
+We use [Biome](https://biomejs.dev/) to enforce high-performance code standards.
+```bash
+bun run lint   # Run linter
+bun run check  # Format and lint
 ```
+
+### Git Hooks
+Pre-commit and pre-push hooks are located in `.git-hooks/`. They ensure that code quality standards are maintained before any code reaches the remote repository.
+
+### CI/CD
+The repository uses GitHub Actions for CI:
+- **CI Pipeline:** Validates builds, checks linting, and runs type-checking.
+- **Deployment:** Automatic deployments to Vercel upon merging to the `main` branch.
 
 ---
 
 ## Contributing
 
-**Local setup:**
+1. **Fork the repo.**
+2. **Feature Branch:** Create a branch based on our conventional commit standards (`feat/`, `fix/`, `content/`).
+3. **Commit Messages:** Follow [Conventional Commits](https://www.conventionalcommits.org/).
+4. **Testing:** Run `bun check` before submitting a Pull Request.
 
-```sh
-git clone https://github.com/resq-software/landing.git
-cd landing
-./scripts/setup.sh
-```
+---
 
-**Run checks:**
+## Roadmap
 
-```sh
-bun lint     # Biome lint
-bun check    # Biome format + lint
-bun build    # production build (validates env vars at startup)
-```
-
-**Commit convention:** This project uses [Conventional Commits](https://www.conventionalcommits.org/).
-
-| Prefix | Effect |
-|--------|--------|
-| `feat:` | New page or feature |
-| `fix:` | Bug fix |
-| `content:` | Copy or asset update |
-| `chore:` / `ci:` | Tooling, no user-visible change |
+- [ ] Implement dark/light mode toggle with system preference persistence.
+- [ ] Add comprehensive E2E tests using Playwright.
+- [ ] Extend instrumentation to include custom performance metrics.
+- [ ] Add blog functionality using MDX.
 
 ---
 
 ## License
 
-Copyright 2026 ResQ
-
-Licensed under the [Apache License, Version 2.0](./LICENSE).
+Copyright 2026 ResQ. Licensed under the [Apache License, Version 2.0](./LICENSE).
